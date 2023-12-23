@@ -1,6 +1,11 @@
 import requests
 import concurrent.futures
 import json
+import hashlib
+import uuid
+
+def generate_id():
+    return hashlib.sha256(uuid.uuid4().bytes).hexdigest()
 
 generated = []
 
@@ -11,7 +16,7 @@ class Discord:
 
     def jwtToken(self):
         try:
-            r = self.session.post('https://api.discord.gx.games/v1/direct-fulfillment', json={"partnerUserId":"01201411865dbdace7fcf119add64b4f09d17635eff26ab7a7eb7fb6d451994c"})
+            r = self.session.post('https://api.discord.gx.games/v1/direct-fulfillment', json={"partnerUserId":generate_id()})
             return r.json()['token']
         except:
             pass
